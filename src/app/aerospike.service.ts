@@ -1,29 +1,14 @@
 import { Injectable } from '@angular/core';
 
-const defaults = {
-  socketTimeout: 5000,
-  totalTimeout: 10000,
-  maxRetries: 5,
-};
-
 @Injectable({
   providedIn: 'root'
 })
 export class AerospikeService {
-  protected client;
   apiUrl = 'http://localhost:3000';
 
   constructor() { }
 
   async connect(url) {
-    await fetch(`${this.apiUrl}/connect`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ url })
-    });
-
     try {
       const result = await fetch(`${this.apiUrl}/connect`, {
         method: 'POST',
@@ -37,8 +22,6 @@ export class AerospikeService {
 
       if (response.success) {
         return true;
-      } else {
-        return null;
       }
     } catch (err) {
       console.error('error in connect: ', err);
@@ -55,8 +38,6 @@ export class AerospikeService {
 
       if (response) {
         return response;
-      } else {
-        return null;
       }
     } catch (err) {
       console.error('error in connect: ', err);
@@ -73,8 +54,6 @@ export class AerospikeService {
 
       if (response) {
         return response;
-      } else {
-        return null;
       }
     } catch (err) {
       console.error('error in connect: ', err);
@@ -91,8 +70,6 @@ export class AerospikeService {
 
       if (response) {
         return response;
-      } else {
-        return null;
       }
     } catch (err) {
       console.error('error in connect: ', err);
