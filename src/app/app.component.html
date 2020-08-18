@@ -9,9 +9,10 @@
 
   <div class="selection" *ngIf="connected">
     <div class="selection-step">
-      <p>Select a namepace</p>
+      <p>Select a namespace</p>
       <div class="list" *ngFor="let ns of namespaces">
-        <button [className]="(namespaceSelected === ns ? 'active' : '') + ' gray'" (click)='selectNamespace(ns)'>{{ns}}</button>
+        <button [className]="(namespaceSelected === ns ? 'active' : '') + ' gray'"
+                (click)='selectNamespace(ns)'>{{ns}}</button>
       </div>
     </div>
 
@@ -27,21 +28,27 @@
       <div class="table">
         <table>
           <thead>
-              <tr>
-                  <th>Namespace</th>
-                  <th>Set</th>
-                  <th>Key</th>
-              </tr>
+          <tr>
+            <th>Namespace</th>
+            <th>Set</th>
+            <th>Key</th>
+          </tr>
           </thead>
           <tbody *ngFor="let item of keys">
-              <tr class="line">
-                  <td>{{item.ns}}</td>
-                  <td>{{item.set}}</td>
-                  <td>{{item.key}}</td>
-              </tr>
+          <tr class="line">
+            <td>{{item.ns}}</td>
+            <td>{{item.set}}</td>
+            <td>{{item.key}}</td>
+          </tr>
           </tbody>
         </table>
       </div>
     </div>
+  </div>
+
+  <div class="error" *ngIf="hasError">
+    <p>
+      {{errorMessage}}
+    </p>
   </div>
 </div>

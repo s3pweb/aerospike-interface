@@ -13,72 +13,53 @@ export class AerospikeService {
   async connect(apiUrl, url) {
     this.apiUrl = apiUrl;
 
-    try {
-      const result = await fetch(`${this.apiUrl}/connect`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({url}),
-      });
+    const result = await fetch(`${this.apiUrl}/connect`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({url}),
+    });
 
-      const response = await result.json();
+    const response = await result.json();
 
-      if (response.success) {
-        return true;
-      }
-    } catch (err) {
-      console.error('error in connect: ', err);
+    if (!result.ok) {
+      throw new Error(response.message);
     }
 
-    return null;
+    return response.success;
   }
 
   async getNamespaces() {
-    try {
-      const result = await fetch(`${this.apiUrl}/namespaces`);
+    const result = await fetch(`${this.apiUrl}/namespaces`);
+    const response = await result.json();
 
-      const response = await result.json();
-
-      if (response) {
-        return response;
-      }
-    } catch (err) {
-      console.error('error in connect: ', err);
+    if (!result.ok) {
+      throw new Error(response.message);
     }
 
-    return null;
+    return response;
   }
 
   async getSets(ns) {
-    try {
-      const result = await fetch(`${this.apiUrl}/${ns}/sets`);
+    const result = await fetch(`${this.apiUrl}/${ns}/sets`);
+    const response = await result.json();
 
-      const response = await result.json();
-
-      if (response) {
-        return response;
-      }
-    } catch (err) {
-      console.error('error in connect: ', err);
+    if (!result.ok) {
+      throw new Error(response.message);
     }
 
-    return null;
+    return response;
   }
 
   async getKeys(ns, set) {
-    try {
-      const result = await fetch(`${this.apiUrl}/keys?namespace=${ns}&set=${set}`);
+    const result = await fetch(`${this.apiUrl}/keys?namespace=${ns}&set=${set}`);
+    const response = await result.json();
 
-      const response = await result.json();
-
-      if (response) {
-        return response;
-      }
-    } catch (err) {
-      console.error('error in connect: ', err);
+    if (!result.ok) {
+      throw new Error(response.message);
     }
 
-    return null;
+    return response;
   }
 }

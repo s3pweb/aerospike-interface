@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { AerospikeService } from './aerospike.service';
+import {Component, OnInit} from '@angular/core';
+import {AerospikeService} from './aerospike.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   apiUrl = 'http://localhost:3000';
   url = '192.168.10.56:3100';
   connected = false;
+  hasError = false;
+  errorMessage = '';
   loading = false;
   namespaces = [];
   sets = [];
@@ -18,7 +20,7 @@ export class AppComponent implements OnInit {
   keys = [];
 
   constructor(
-    private aerospikeService: AerospikeService
+    private aerospikeService: AerospikeService,
   ) {
     // -- Empty
   }
@@ -29,15 +31,19 @@ export class AppComponent implements OnInit {
 
   async connect() {
     this.loading = true;
+    this.hasError = false;
+    this.errorMessage = '';
 
     if (this.url) {
-      console.log('url: ', this.url);
+      try {
+        const result = await this.aerospikeService.connect(this.apiUrl, this.url);
 
-      const result = await this.aerospikeService.connect(this.apiUrl, this.url);
-
-      if (result) {
-        this.connected = true;
-        this.namespaces = await this.aerospikeService.getNamespaces();
+        if (result) {
+          this.connected = true;
+          this.namespaces = await this.aerospikeService.getNamespaces();
+        }
+      } catch (err) {
+        this.handleError(err);
       }
     }
 
@@ -46,13 +52,32 @@ export class AppComponent implements OnInit {
 
   async selectNamespace(ns) {
     this.namespaceSelected = ns;
-    this.sets = await this.aerospikeService.getSets(ns);
+    try {
+      this.sets = await this.aerospikeService.getSets(ns);
+    } catch (err) {
+      this.handleError(err);
+    }
   }
 
   async selectSet(set) {
     this.setSelected = set;
-    this.keys = await this.aerospikeService.getKeys(this.namespaceSelected, this.setSelected);
 
-    console.log('keys: ', this.keys);
+    try {
+      this.keys = await this.aerospikeService.getKeys(this.namespaceSelected, this.setSelected);
+    } catch (err) {
+      this.handleError(err);
+    }
+  }
+
+  handleError(err) {
+    this.connected = false;
+    this.namespaces = [];
+    this.namespaceSelected = null;
+    this.sets = [];
+    this.setSelected = null;
+    this.keys = [];
+    // Display error message
+    this.hasError = true;
+    this.errorMessage = err.message;
   }
 }

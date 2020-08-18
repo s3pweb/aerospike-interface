@@ -65,6 +65,19 @@
     }
   }
 
+  .error {
+    display: flex;
+    flex-flow: column;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid red;
+
+    p {
+      text-align: center;
+      color: red;
+    }
+  }
 
   .keys {
   }
