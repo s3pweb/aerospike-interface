@@ -7,6 +7,7 @@ import { AerospikeService } from './aerospike.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  apiUrl = 'http://localhost:3000';
   url = '192.168.10.56:3100';
   connected = false;
   loading = false;
@@ -18,10 +19,12 @@ export class AppComponent implements OnInit {
 
   constructor(
     private aerospikeService: AerospikeService
-  ) {}
+  ) {
+    // -- Empty
+  }
 
   ngOnInit(): void {
-
+    // -- Empty
   }
 
   async connect() {
@@ -30,7 +33,7 @@ export class AppComponent implements OnInit {
     if (this.url) {
       console.log('url: ', this.url);
 
-      const result = await this.aerospikeService.connect(this.url);
+      const result = await this.aerospikeService.connect(this.apiUrl, this.url);
 
       if (result) {
         this.connected = true;

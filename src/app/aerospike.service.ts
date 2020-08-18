@@ -1,21 +1,25 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AerospikeService {
   apiUrl = 'http://localhost:3000';
 
-  constructor() { }
+  constructor() {
+    // -- Empty
+  }
 
-  async connect(url) {
+  async connect(apiUrl, url) {
+    this.apiUrl = apiUrl;
+
     try {
       const result = await fetch(`${this.apiUrl}/connect`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ url })
+        body: JSON.stringify({url}),
       });
 
       const response = await result.json();

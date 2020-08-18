@@ -1,5 +1,7 @@
 <div class="home">
   <div class="login">
+    <span>API url</span>
+    <input type="text" [(ngModel)]="apiUrl">
     <span>Aerospike url</span>
     <input type="text" [(ngModel)]="url">
     <button [disabled]="loading" (click)='connect()'>Connect</button>
