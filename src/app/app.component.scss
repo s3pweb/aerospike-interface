@@ -1,0 +1,82 @@
+.home {
+  padding: 10px;
+
+  .login {
+    display: flex;
+    flex-flow: column;
+    margin: 10px 0px;
+
+    span {
+      margin-bottom: 10px;
+    }
+
+    input {
+      border: none;
+      background-color: whitesmoke;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      border: none;
+      padding: 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #20bf6b;
+      color: white;
+      font-size: 15px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      opacity: 0.8 !important;
+    }
+  }
+
+  .selection {
+    display: flex;
+    flex-flow: column;
+    margin: 10px 0px;
+
+    .selection-step {
+      margin-bottom: 10px;
+
+      p {
+        margin:0;
+        margin-bottom: 10px;
+      }
+
+      button {
+        border: none;
+        padding: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white;
+        font-size: 15px;
+      }
+
+      .active {
+        background-color: #4b7bec;
+      }
+
+      .list {}
+    }
+  }
+
+
+  .keys {}
+
+  .green {
+    color: #20bf6b;
+  }
+
+  .red {
+    color: #eb3b5a;
+  }
+
+  .gray {
+    background-color: #4b6584;
+  }
+}
